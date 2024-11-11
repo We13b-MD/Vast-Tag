@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAST Ad</title>
+
+    <style>
+        #videoPlayer{
+            width:300px;
+            height:250px;
+        }
+    </style>
+</head>
+<body>
+ <div class="videoContainer" id="videoAdContiner">
+<video id="videoPlayer" controls></video>
+
+ </div>  
+
+<script  src=""></script>
+ <script>
+const vastURL = "https://res.cloudinary.com/dvfgzdhvu/raw/upload/v1731326871/vast_bs6qrm.xml"
+
+ // Tracking function
+ /*(function trackEvent(endpoint) {
+            console.log(`Tracking event at ${endpoint}`);
+            fetch(`  http://127.0.0.1:8080${endpoint}`, { method: 'GET' })
+                .then(response => response.json()) 
+                
+                .then(data =>{
+                    console.log(`Tracked events at ${endpoint}`)
+                    console.log(`Total clicks for ${data.event}: ${data.count}`)
+                })
+                .catch((error) => console.error(`Error tracking event at ${endpoint}`, error));
+        }
+*/
+     /*   function trackEvent(endpoint, data) {
+    fetch(`http://127.0.0.1:8080${endpoint}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), // Send event data as JSON
+    })
+    .then(response => response.json())
+    .then(data => console.log('Event Data:', data))
+    .catch(error => console.error('Error tracking event:', error));
+}
+*/
+
+
+
+
+
+        // Load and parse VAST XML
+
+
+       
+
+   
+
+        // Call the function to load the VAST
+          // Event counts for tracking
+          let impressionCount = 0;
+        let startCount = 0;
+        let firstQuartileCount = 0;
+        let midpointCount = 0;
+        let completeCount = 0;
+
+        const videoElement = document.getElementById('videoPlayer');
+
+        // Function to track events
+        function trackEvent(eventName) {
+            console.log(`Event: ${eventName} - Count: ${eval(`${eventName}Count`)}`);
+        }
+
+        // Fetch and parse the VAST XML, then set the video source
+        function loadVast() {
+            fetch(vastURL)
+                .then(response => response.text())  // Get XML response as text
+                .then(xmlText => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+
+                    // Get the MediaFile URL from the XML (assuming there is a <MediaFile> tag)
+                    const mediaFile = xmlDoc.querySelector('MediaFile').textContent;
+
+                    // Set the video source dynamically from the XML
+                    videoElement.src = mediaFile;  // Set video source to the parsed MediaFile URL
+                    videoElement.load();  // Load the video element with the new source
+
+                    console.log('VAST XML loaded and video source set:', mediaFile);
+                })
+                .catch(error => {
+                    console.error('Error loading VAST XML:', error);
+                });
+        }
+
+        // Impression event - triggered once when the video loads
+        videoElement.addEventListener('loadeddata', function() {
+            impressionCount++;
+            trackEvent('impression');
+        });
+
+        // Start event - triggered when the video starts playing
+        videoElement.addEventListener('play', function() {
+            startCount++;
+            trackEvent('start');
+        });
+
+        // First Quartile event - triggered when 25% of the video is played
+        videoElement.addEventListener('timeupdate', function() {
+            const percentPlayed = (videoElement.currentTime / videoElement.duration) * 100;
+            if (percentPlayed >= 25 && firstQuartileCount === 0) {
+                firstQuartileCount++;
+                trackEvent('firstQuartile');
+            }
+        });
+
+        // Midpoint event - triggered when 50% of the video is played
+        videoElement.addEventListener('timeupdate', function() {
+            const percentPlayed = (videoElement.currentTime / videoElement.duration) * 100;
+            if (percentPlayed >= 50 && midpointCount === 0) {
+                midpointCount++;
+                trackEvent('midpoint');
+            }
+        });
+
+        // Complete event - triggered when the video ends
+        videoElement.addEventListener('ended', function() {
+            completeCount++;
+            trackEvent('complete');
+        });
+
+        // Load VAST XML when the page loads
+        window.onload = function() {
+            loadVast();
+        };
+
+
+
+ </script> 
+</body>
+</html>

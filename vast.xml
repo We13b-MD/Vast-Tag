@@ -1,0 +1,61 @@
+<VAST version="3.0">
+  <Ad id="12345">
+    <InLine>
+      <AdSystem>Cloudinary Ad Server</AdSystem>
+      <AdTitle>In-Banner Video Ad</AdTitle>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <Duration>00:00:30</Duration>
+            <TrackingEvents>
+              <!-- Impression Tracking -->
+              <Tracking event="impression">https://trackingurl.com/impression</Tracking>
+
+              <!-- Start Event -->
+              <Tracking event="start">https://trackingurl.com/start</Tracking>
+
+              <!-- First Quartile -->
+              <Tracking event="firstQuartile">https://trackingurl.com/firstQuartile</Tracking>
+
+              <!-- Midpoint -->
+              <Tracking event="midpoint">https://trackingurl.com/midpoint</Tracking>
+
+              <!-- Third Quartile -->
+              <Tracking event="thirdQuartile">https://trackingurl.com/thirdQuartile</Tracking>
+
+              <!-- Complete -->
+              <Tracking event="complete">https://trackingurl.com/complete</Tracking>
+
+              <!-- Mute Event -->
+              <Tracking event="mute">https://trackingurl.com/mute</Tracking>
+
+              <!-- Unmute Event -->
+              <Tracking event="unmute">https://trackingurl.com/unmute</Tracking>
+
+              <!-- Pause Event -->
+              <Tracking event="pause">https://trackingurl.com/pause</Tracking>
+
+              <!-- Resume Event -->
+              <Tracking event="resume">https://trackingurl.com/resume</Tracking>
+
+              <!-- ClickThrough Event -->
+              <Tracking event="clickThrough">https://trackingurl.com/clickThrough</Tracking>
+
+              <!-- ClickTracking Event -->
+              <Tracking event="clickTracking">https://trackingurl.com/clickTracking</Tracking>
+            </TrackingEvents>
+            <VideoClicks>
+              <ClickThrough>https://www.example.com</ClickThrough>
+            </VideoClicks>
+            <MediaFiles>
+              <MediaFile delivery="progressive" type="video/mp4" width="300" height="250">
+                https://res.cloudinary.com/dvfgzdhvu/video/upload/v1731326590/4179967-uhd_2560_1440_30fps_ywsh2s.mp4
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>
+
