@@ -6,7 +6,7 @@
     "xmldom": "^0.6.0"
   },
   "name": "vast",
- 
+ "type":"module"
   "version": "1.0.0",
   "main": "vastServer.js",
   "scripts": {
