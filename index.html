@@ -18,9 +18,24 @@
 
  </div>  
 
-<script  src=""></script>
+<script  src="./vastServer.js"></script>
  <script>
 const vastURL = "https://res.cloudinary.com/dvfgzdhvu/raw/upload/v1731326871/vast_bs6qrm.xml"
+
+
+
+     function trackEvent(eventType) {
+    fetch(`https://vast-backend-3.onrender.com/track/${eventType}`, {
+        method: 'GET',
+        mode: 'cors'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(`Total ${eventType} events: ${data.count}`);
+    })
+    .catch(error => console.error(`Error tracking ${eventType}`, error));
+}
+
 
  // Tracking function
  /*(function trackEvent(endpoint) {
